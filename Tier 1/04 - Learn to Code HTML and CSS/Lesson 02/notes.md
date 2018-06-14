@@ -225,4 +225,3 @@ linking jumps to a specific ID.
 In order to use this kind of linking, you need to give an element an ID, and then put that ID (preceded by a `#`) in
 the `href`. So, to link back to the top of the page, you need to give the topmost element an ID like `top` and then have
 an `<a>` element use it, like `<a href="#top"> ... </a>`.
-
