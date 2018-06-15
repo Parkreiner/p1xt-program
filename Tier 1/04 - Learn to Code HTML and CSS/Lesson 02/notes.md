@@ -117,6 +117,19 @@ with `<header>`s.
 You can use the `<nav>` element to denote a section as containing major navigation links. This element should only be
 used for major navigation, such as global navigation, previous/next links, or tables of contents.
 
+Interestingly, it seems that in HTML5, it's valid to omit `<ul>` and `<li>` elements in your `<nav>`. In such a case,
+you'd just have a series of `<a>` elements
+
+'''css
+<nav>
+    <a href="index.html">Home</a>
+    <a href="speakers.html">Speakers</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="venue.html">Venue</a>
+    <a href="register.html">Register</a>
+</nav>
+'''
+
 ### `<article>`
 This one can be a little confusing, but the most general way of putting it is that an `<article>` elment represents an
 article or unit of content, in a sense similar to an article of clothing. That is, the content inside must be able to
