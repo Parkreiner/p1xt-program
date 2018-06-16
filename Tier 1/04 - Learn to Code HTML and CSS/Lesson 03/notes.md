@@ -170,14 +170,65 @@ There are multiple ways of specifying color in CSS:
 * Pre-defined color names
 
 Here are examples of how to format each:
-* RGB - rgb(0, 0, 0)
-* RGBa - rgba(147, 255, 10, 1)
-* Hex - #abfcd4 or #e3f
-* HSL - hsl(250, 100%, 24%)
-* HSLa - hsla(117, 25%, 100%, 0.75)
+* RGB - `rgb(0, 0, 0)`
+* RGBa - `rgba(147, 255, 10, 1)`
+* Hex - `#abfcd4` or `#e3f`
+* HSL - `hsl(250, 100%, 24%)`
+* HSLa - `hsla(117, 25%, 100%, 0.75)`
 
 #### Alpha Chanels
 Both HSL and RGBA have versions that support alpha channels. For both, the alpha value comes last, and it's a number
 between 0 and 1 (both inclusive). 0 is fully transparent, while 1 is fully opaque.
 
 ### Lengths
+Similar to colors, lengths in CSS have a number of ways that they can be defined – but this time, they're units. All
+the units that you can use fall into one of two camps: relative units or absolute units.
+
+### Absolute units
+Absolute units are just that: absolute. They carry meaning regardless of what elements they're surrounding by or
+enclosed within. It seems that the most popular form of absolute unit is *still* the pixel.
+
+#### Pixels
+Pixels, denoted by `px` in CSS, is perhaps the most basic size unit in the language. Bare minimum, there are 96 pixels
+in an inch, but more and more devices have entered the picture and as pixel density has gotten higher, that' no longer
+the case.
+
+Pixels can be used to size the width and height of elements, and in some cases, you can also use them to change the size
+of the inner content.
+
+```css
+p
+{
+    font-size: 14px;
+}
+```
+
+Nowadays, pixels aren't that useful. Because there's a much wider range of devices, you can't trust a pixel to work the
+same even the majority of the time. As such, they've largely been relegated to being a learning tool.
+
+### Relative units
+Relative units are just that: they're relative to some other element. That is, if you could somehow tear out an element
+that uses relative units from its surroundings, those units would mean absolutely nothing. The units are context-based.
+
+#### Percentages
+Percentages are the pixels of relative units: they're the most popular, and they're easy to learn. However, unlike
+pixels, percentages have been able to keep pace with the demands of modern web development. 
+
+As a relative unit, percentages require that the browser find information about what contains the element using
+percentages. If you give an element a width of `50%`, then the browser needs to know what that means – "`50%` of what?"
+So, it needs to go up to the that element's parent and find its width, which itself could be defined in terms of
+percents.
+
+#### Ems
+Ems are another popular element, but they're not appropriate in all contexts. An em is equal to the size of some text.
+So, if you have `16px` text, then `1em` will be equal to `16px`. In most cases, an em will also be equal to the width
+of an uppercase M. 
+
+An em will adopt the text size of the closest parent that has an explicit text size or `em` property. So, if you give
+one element a width of `2em`, but its parent also has a width of `2em`, which is based on a parent text size of `16px`,
+the total width of that innermost element will be `48px`.
+
+Ems can be tricky to work with, because they keep stacking on top of each other. You need to be aware of the properties
+that you've assigned to your elements. Also, when you start using ems, you generally do so after setting a base text
+size for the entire document through an `html` or `body` selector. This size can be redefined through user-styles,
+ensuring that all elements stay proportional, even with smaller or larger text.
