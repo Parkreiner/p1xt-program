@@ -211,4 +211,42 @@ second element will add to right padding of the container.
 
 ```
 
-## Uniquely positioning elements
+## Uniquely positioning elements with the `position` property
+Every so often, you might find that you need to position an element very precisely and that neither floats nor inline
+blocks do the trick. There are a number of reasons why.
+* Floats can cause all the elements around them to behave erratically
+* Inline blocks are a pain to position unless they're all of the same width and height.
+
+This is where the `position` property comes in. It allows you to define precisely how elements are positioned, either
+by adjusting their place in the flow or by removing them from it. This property can also be used with the box-offset
+properties `top`, `bottom`, `right`, and `left` to further refine the placement.
+
+### `positiion: static`
+This is the default position value for all elements. It prevents them from accepting any of the box-offset properties.
+
+### Relative positioning with `position: relative`
+It seems that this is basically `position: static`, except that it allows you to apply the box-offset properties to the
+affected element. When you do use those properties, the element will move, but the space that it originally occupied
+won't change. Other elements won't be able to move inside it, even if there's room.
+
+Also, all relatively-positioned elements will, by default, have a higher z-index than all statically-positioned
+elements.
+
+### Absolute positioning with `position: absolute`
+The `position: absolute` property will remove an element from its normal flow, bringing it to the top of its nearest
+relatively-positioned parent. If no parent that contains the absolutely-positioned element exists, then it'll move to
+the top of the body.
+
+It also seems that any element with this property and value will have a higher z-index than staticaly-positioned
+elements.
+
+### The box offset properties: `top`, `bottom`, `left`, and `right`
+When you use the box-offset properties on a uniquely-positioned element, each property will define that element's
+distance from its starting position. For example, `top` will define what distance the element will be from the top of
+its original space. If you give an element a value of `top: 30px`, it will move `30px` down, or `30px` from the top of
+its original space. Use `left: 20px`, and you'll nudge it `20px` to the right.
+
+If you use one of these properties on an absolutely-positioned element, it will move that element to that respective
+side and *then* push it away. So, if you give an absolutely-positioned element a `right: 20px` property, that element
+will go all the way to the right of its nearest relatively-positioned parent. It will then move 20px away from the
+right, effectively nudging it 20px to the left.
