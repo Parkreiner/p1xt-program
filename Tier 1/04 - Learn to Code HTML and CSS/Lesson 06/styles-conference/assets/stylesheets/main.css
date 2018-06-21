@@ -1,7 +1,10 @@
- /*
-    Nothing actually here, because the author originally just copy-and-pasted the CSS reset in here, instead of saving
-    it as a separate file.
+/*
+  ========================================
+  Type Import
+  ========================================
 */
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400');
+
 /*
   ========================================
   Clearfix
@@ -88,7 +91,7 @@ strong {
   ========================================
 */
 body {
-    font: 300 16px/22px "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
 h1, h3, h4, h5, p {
@@ -112,6 +115,8 @@ h5 {
     color: #a9b2b9;
     font-size: 14px;
     font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /*
@@ -122,11 +127,15 @@ h5 {
 
 a {
     color: #648880;
+    text-decoration: none;
 }
 a:hover {
     color: #a9b2b9;
 }
-  
+p a {
+    border-bottom: 1px solid #dfe2e5;
+}
+
 /*
   ========================================
   Buttons
@@ -150,7 +159,7 @@ a:hover {
 
 .hero {
     line-height: 44px;
-    padding: 22px 80px 66px 80px;
+    padding: 22px 80px 66px;
 }
 .hero h2 {
     font-size: 36px;
@@ -164,7 +173,6 @@ a:hover {
   Primary header
   ========================================
 */
-
 .logo {
     float: left;
     border-top: 4px solid #648880;
@@ -172,6 +180,10 @@ a:hover {
     font-size: 48px;
     line-height: 44px;
     padding: 40px 0 22px;
+    text-transform: uppercase;
+    font-weight: 100;
+    letter-spacing: 0.05em;
+    line-height: 1.1em;
   }
 .tagline {
     margin: 66px 0 22px;
@@ -179,7 +191,14 @@ a:hover {
 .primary-nav {
     font-size: 14px;
     font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
+.tagline {
+    margin: 66px 0 22px;
+    text-align: right;
+}
+
 /*
   ========================================
   Primary footer
@@ -193,4 +212,13 @@ a:hover {
 .primary-footer small {
     float: left;
     font-weight: 400;
+}
+
+/*
+  ========================================
+  Navigation
+  ========================================
+*/
+.nav {
+    text-align: right;
 }

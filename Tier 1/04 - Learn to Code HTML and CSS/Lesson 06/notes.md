@@ -222,4 +222,95 @@ This is for applying case styles to your text without changing your HTML. There 
 5. `none`
 
 ### `letter-spacing`
-This property affects a text element's tracking. 
+This property affects a text element's tracking. Can take positive or negative values. Setting the value to `none` will
+reset the spacing.
+
+This is one property that you definitely want to use `em`s for. Even `rem`s will be terrible.
+
+### `word-spacing`
+This property affects the amount of spacing between words, I'd assume by increasing the width of each space. Like the
+`letter-spacing` property, this property also wants to always be defined in `em`s.
+
+## Web-Safe Fonts
+There's a very limited number of "web-safe fonts" – fonts that are installed on virtually every computer and
+computer-like device – available. Here's a basic list:
+
+* Arial
+* Garamond
+* The Lucida Family (Sans, Grande, regular)
+* Tahoma
+* Trebuchet
+* Courier and Courier New
+* Georgia
+* Palatino (I strongly disagree)
+* Times / Times New Roman
+* Verdana
+
+## Embedding Web Fonts with `@font-face`
+The `@font-face` at-rule allows you to import external typefaces. Once imported, you're free to use the typeface in any
+other selectors.
+
+The following code imports Lobster into the website. If the user already has it installed on their computer, it'll use
+that. But if they don't, then it'll load the file as a .woff through a URL. As for what a .woff is, it's basically a
+font file like a .ttf or .otf that has extra compression for the web.
+
+```css
+@font-face {
+    font-family: "Lobster";
+    src: local("Lobster"), url("lobster.woff") format("woff");
+}
+```
+
+Google also uses this more concise form (don't know why local isn't used, though):
+```css
+@import url('https://fonts.googleapis.com/css?family=Lato:100,400|Lobster');
+```
+
+Before you host any fonts on your server, though, be sure to make sure that you have a license that allows you to do so.
+
+## Including Citations and Quotations
+Every so often, your copy is going to include a quote. Luckily, HTML includes several elements designed to mark them up.
+These elements include:
+* `<cite>` – Used to refer to a separate creative work or author
+* `<blockquote>` – For blockquotes (quotes that are separate from the main text)
+* `<q>` – For inline quotes
+
+### Using `<cite>` to cite a creative work
+This element is for crediting something that you've cited. Just for extra reference material, it's customary to use this
+element with the `<a>` element to provide a link to some version of the original work (whether it's a link to a full,
+official online version or a site for where to buy it).
+
+By default, these elements are italicized.
+
+### Dialogue and Prose Quotation
+Most dialogue and prose is done inline, meaning that you should almost always use the `<q>` element. When you do, don't
+use quotation marks in your HTML; most browsers should add the marks by default. This element also accepts the `cite`
+attribute, which defines a citation source for the element the attribute is in.
+
+### External Quotation
+Blockquotes are good for large quotes that span multiple lines. These are almost never placed inline.
+
+### External Citation
+Whenever you have a block quote, you're likely going to want a citation to accompany it. You can add one through the
+`cite` attribute or the `<cite>` element, though it never hurts to use both.
+
+Example:
+```html
+<blockquote cite="http://money.cnn.com/magazines/fortune/fortune_archive/2000/01/24/272277/index.htm">
+    <p>
+        &#8220;In most people&#8217;s vocabularies, design is a veneer. It&#8217;s interior decorating. It&#8217;s the
+        fabric of the curtains, of the sofa. But to me, nothing could be further from the meaning of design. Design is
+        the fundamental soul of a human-made creation that ends up expressing itself in successive outer layers of the
+        product.&#8221;
+    </p>
+    <footer>
+        <cite>&#8212; Steve Jobs in <a href="http://money.cnn.com/ magazines/fortune/fortune_archive/2000/01/24/272277/index.htm">
+            Fortune Magazine</a></cite>
+    </footer>
+</blockquote>
+```
+
+### Problem with the `cite` attribute
+For some reason, the `cite` attribute doesn't actually display the source used as its value. I'm guessing that the
+attribute is mainly for screen readers, but if you want readers to see the source, you'll have to include it in
+something like an `<a>` element.
