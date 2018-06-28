@@ -1,3 +1,5 @@
+Notes I took from watching CS50's guide to Git. Will add to later once I start to learn how to use Git more and better.
+
 # General Commands
 ## `git clone <url>`
 Copies an online repository to local storage.
