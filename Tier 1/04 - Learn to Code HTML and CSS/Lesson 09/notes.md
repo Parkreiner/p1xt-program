@@ -106,4 +106,91 @@ In addition, you can also place other elments inside the `<audio>` element. Thes
 processing it doesn't support the `<audio>` element at all. However, even if the audio can't be loaded, if the browser
 does support the element, then none of the inner content will be displayed.
 
+```html
+<audio controls>
+    <source src="jazz.ogg" type="audio/ogg">
+    <source src="jazz.mp3" type="audio/mpeg">
+    <source src="jazz.wav" type="audio/wav">
+    Please <a href="jazz.mp3" download>download</a> the audio file.
+</audio>
+```
+
 ## Adding video with `<video>`
+
+Adding video to HTML isn't that different compared to adding audio. You have to use `<video>` instead of `<audio>`, but
+all the other attributes like `auto`, `none`, `controls`, and `preload` apply. You can also either use the `src`
+attribute, or use a fallback system of multiple inner `<source>` elements.
+
+Still, there is a slight difference when it comes to the `controls` attribute. When you don't use it for `<audio>`
+elements, the audio simply won't appear. When you do the same for `<video>`, the video will appear – it's just that the
+controls won't. If you want the user to be able to control the video, then, you'll want to specify the `controls`
+attribute every single time. Though sometimes you don't, like when you're using the video as more of a decoration.
+
+Since `<video>` elements, like `<img>` elements, always take up space in the browser, it's a good idea to specify their
+width and height to help load all the content around it faster. It's probably more critical that you do, since videos
+are bigger than images. You can do this either by specifying the `width` and `height` attributes of the element or by
+defining the `width` and `height` via CSS. This also helps ensure that your video doesn't break out of your page layout.
+
+### The `poster` attribute
+
+The `poster` attribute allows you to define an image that gets displayed in the video player before the user plays the
+video. Like `src`, its value is a URL.
+
+```html
+<video src="earth.ogv" controls poster="earth-video-screenshot.jpg"></video>
+```
+
+### Video fallbacks
+
+The `<video>` element lets you define multiple video sources to act as fallbacks, just like with the `<audio>` element.
+As always, you want to define multiple `<source>` elements, followed by some text element. The latter, of course, only
+gets displayed if the user's browser doesn't support HTML5 video whatsoever. If the browser recognizes one of the
+`<source>` elements early, then it'll stop looking through everything else.
+
+## Customizing video and audio controls
+
+Again, the style of the video and audio player created by the `<video>` and `<audio>` elements is determined by the
+browser. If you want to customize their appearance, you have no choice but to use JavaScript.
+
+## Adding inline frames
+
+The `<iframe>` element lets you embed an HTML inside the current one. This element has one main attribute – `src` –
+which takes the URL of an HTML page as its value. This element is most commonly used to embed content from websites
+like Google Maps and YouTube.
+
+It also has some default styling, such as a border and a base width and height. As a more legacy element, this can be
+changed by using the `frameborder`, `width`, and `height` attributes, or by using the `border`, `width`, and `height`
+properties.
+
+Whenever you embed another webpage via `<iframe>`, that page will not be affected by your style sheets. The iframe
+will use whatever CSS the document references in its own code. Also, whenever you click links in the iframe, they'll
+be opened in that iframe. The user won't have their current page changed, nor will the link open a new tab (though I
+don't know about when the link explicitly uses `target="_blank"`).
+
+## Semantically identifying figures and captions
+
+HTML5 added the `<figure>` and `<figcaption>` elements, which allow you to semantically define figures and captions for
+those figures. Apparently the old way of implementing this functionality relied on using ordered lists, which sounds
+really jank to me, so thank god we're out of the dark ages.
+
+### The `<figure>` element
+
+The `<figure>` element is used to designate any content that is illustrative but that isn't necessarily an illustration.
+That is, it's basically for additional, self-contained media that enhances the main text. If you move the figure, it
+shouldn't affect the main content at all.
+
+These elements can include images, video, audio, and even code. You can also include multiple types of media within the
+same `<figure>` element.
+
+### The `<figcaption>` element
+
+The `<figcaption>` element is a little interesting. It can be used **anywhere** within the `<figure>` element, but you
+can only have one caption per figure, and the caption is to describe the entire figure, even if there are multiple
+instances of media inside it.
+
+```html
+<figure>
+    <img src="dog.jpg" alt="A dog wearing a kerchief around its neck">
+    <figcaption>A beautiful black, brown, and white hound dog wearing kerchief.</figcaption>
+</figure>
+```
