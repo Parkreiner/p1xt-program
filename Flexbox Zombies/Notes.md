@@ -33,7 +33,7 @@ The property has a couple of values:
 * `center` - The items on all lines but the final one will be evenly-spaced. The content on the final one will start from the center.
 * `space-around` - Ensures that each element has an equal amount of spacing on its sides parallel to the flex direction. This means that the elements will have two "units" of spacing between them, but there will only be one "unit" between them and the container edges. The amount of space will remain evenly-distributed even if each element has different margins.
 * `space-between` - Ensures that the content on **all** lines is evenly-spaced. If there are two elements, each will hug the edges of the line. If there is only one element, it will start at the beginning of its line's flex flow (e.g., a container with `flex-direction: column-reverse` will have the element start at the bottom).
-* `space-evenly` -
+* `space-evenly` - This is basically `space-between`, except that the outermost elments don't hug the edges of the container. This means that there is an equal amount of spacing between all elements. You don't get doubled spacing like you do with `space-around`.
 
 ### `space-around` vs `space-between`
 
