@@ -4,17 +4,17 @@ X.X.X - Main section number, sub-section number, sub-sub-section number
 
 ## 0.0 – Extra
 
-### 0.0.1 – Loose equality documentation
+### 0.1 – Loose equality documentation
 
 [This is the link to the part of the JS documentation that describes how the `==` operator works.](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3)
 
-### 0.0.2 – Good rule of thumb for when to use `==`
+### 0.2 – Good rule of thumb for when to use `==`
 
 1. If at least one value in the comparison isn't always the same value each time – whether that's `true` or `false` – use `===`.
 2. If either value is falsy (such as an empty array) and you don't want it coerced into `false`, use `===`.
 3. Feel free to use `==` in all other cases
 
-### 0.0.3 – `void 0`
+### 0.3 – `void 0`
 
 In all modern-day versions of JS, it's perfectly fine to use `undefined` in your code. However, not all browsers
 supported the keyword from the beginning, meaning that it will sometimes cause browsers to break. However, `undefined`
@@ -54,8 +54,8 @@ to be safely patched out.
 
 #### 1.1.3 – Declaring a variable with no value
 
-When you declare a variable without giving it a value (`var a;`), that's equivalent to setting it initializing it to
-`undefined` (`var a = undefined`).
+When you declare a variable without giving it a value (`var a;`), that's equivalent to initializing it to `undefined`
+(as in, it's the equivalent to `var a = undefined`).
 
 ### 1.2.1 – Objects
 
@@ -163,4 +163,239 @@ behave similarly to `==`, they have some differences. So, if you have `41 <= "42
 `true`. Of course, if you try comparing a number with something that obviously isn't a number (like `41 >= "Cat"`), the
 string will become `NaN`, which will cause the comparison to yield `false`.
 
-## 2.1 – Variables (4.0 in Google Notes)
+## 2 – Variables
+
+### 2.1 – Overview
+
+JS variable names must all be valid identifiers. There is a simple set of rules for determining whether a name is valid,
+but that's only for ASCII-based English characters. Obviously you can also use foreign language characters, and
+apparently you can also use emoji. I don't know how they work, though.
+
+As long as you're just using basic ASCII, though:
+
+1. Identifiers cannot be reserved words – the words that JS uses to operate
+2. Identifier must start with a letter, an `_` (underscore), or a `$`
+3. For all characters other than the first, you can use letters, `_`, `$`, and any number
+
+### 2.2 – Function Scopes
+
+Whenever you use the `var` keyword to declare a variable, that variable will be accessible from anywhere from within the
+function scope it was declared in. So, if you use `var` inside a loop, it will still exist and be accessible after it
+ends. It will get garbage-collected eventually, but for at least some period of time, it'll be accessible out of
+context.
+
+If the keyword is used outside a function, then that variable will be treated as completely global.
+
+#### 2.2.1 – Hoisting
+
+The mechanism that allows variables to be accessible from anywhere within the scope they were declared is called
+**hoisting**. It is absolutely important that you understand it, as a lot of developers end up getting tripped up by
+not even knowing it exists.
+
+The way it works is that it moves any instances of variable declaration to the very top of the scope. So, all cases
+of statements like `var a;` will get moved all the way up. However, this is only for the declaration, not the
+initialization. If you use a statement, like `var a = 2;`, the engine will basically break it into two statements:
+`var a;` and `a = 2;` Only the former will be moved up, so if you try accessing `a` before it gets assigned a value,
+you'll get `undefined`.
+
+However, this isn't too useful when dealing with variables. You generally don't want to take advantage of hoisting for
+variables, as it can make code very confusing to read. But functions are a different story. Hoisting also works on
+function definitions, which is what allows them to be called before they're defined. Using hoisting to throw all your
+function definitions at the bottom of your code is perfectly fine, and can even help make it more readable.
+
+#### 2.2.2 – Nested Scopes
+
+A variable is accessible from anywhere within the scope where it was declared, including scopes nested within that
+scope. On the flip side, any variables declared within a scope is **inaccessible** by the scopes that contain that
+scope. Trying to reference a variable's value before it's been initialized or assigned will result in a
+`ReferenceError`.
+
+Be extra careful about referencing variables that you haven't declared yet. By default, JS has an annoying behavior
+whereby it will, upon finding an assignment for a variable that doesn't exist, create that variable as a global
+variable. However, this doesn't happen if you set the entire program or even the scope where the assignment happens to
+**strict** mode. In strict mode, such an occurrence will result in a `ReferenceError`.
+
+#### 2.2.3 – Block-level scopes
+
+ES6 introduced support for block-level scopes via the `let` and `const` keywords. Variables declared this way are only
+accessible within their block and any blocks contained within it. Blocks, in this case, basically refers to anything
+contained within a set of braces `{ }`, including functions, conditional blocks, and loops. This is very similar to a
+technique that other languages allow, by which any variables contained within a set of braces is treated as being scoped
+to the block they create. Those don't need dedicated keywords, but at least a huge oversight finally got mended. It just
+took almost twenty years.
+
+## 3 – Conditionals
+
+This is an area where JS does better than Python. Unlike Python, JavaScript supports switch statements and a C-like
+ternary operator. This makes makes conditionals a little more concise and their writing a little faster. Just be sure
+not to forget that switch cases can cascade into each other; if you don't want that, you need to use the `break`
+keyword.
+
+```javascript
+var a = 2;
+switch (a) {
+    case 1:
+        console.log("a = 1");
+        break;
+    case 2:
+    case 4:
+        console.log("a % 2 = 0 and 0 < a < 5");
+        break;
+    default:
+        console.log("a = 3 or a >= 5");
+}
+```
+
+## 4 – Strict Mode
+
+Okay, so the book doesn't delve into this too much, but apparently, it's not always a great idea to set an entire script
+to strict mode, because it screws with how older browsers handle code that's written with the mode in mind. After all,
+the mode was only added in ES5.
+
+In strict mode, JS doesn't try to resolve any errors. This means that if you do things like assign a value to a variable
+that hasn't been declared, it won't create that variable in the global namespace. Instead, it'll just break the script.
+This has some trade-offs. In some cases, you don't want scripts to completely break and would like for them to power
+through any bugs. At the same time, using strict mode actually provides a lot of performance increases and
+optimizations.
+
+To use strict mode, all you need to do is type `"use strict";` anywhere in the code. If placed at the very top, the
+entire script will be set to strict mode. If placed within a function, all code in that function will be set to strict
+mode. It doesn't seem that you can scope strict mode to a block, which I guess makes sense. Strict mode was added in
+ES5, while major block-scoping support was added in ES6. ES6 had to create entirely different keywords and couldn't
+modify `var` at all; I'm guessing `"use strict";` was similarly untouchable.
+
+Curiously, strict mode disallows things like deleting variables, deleting functions, and using octal numbers. I'm not
+sure why it bars octal numbers, but at least it completely neuters the `with` statement and the `eval()` function – the
+two parts of the language that ignore lexical scoping rules.
+
+## 5 – Functions as values
+
+### 5.1 – Overview
+
+Whenever you use the `function` keyword by itself to define a function, that function is basically being stored in a
+variable. It doesn't matter whether you explicitly assign it to a variable, either.
+
+This has some implications. This behavior means that you can assign a function as a return value and can even use them
+as arguments. When you assign a function to a variable, that function can be either named or anonymous. If you do decide
+to name the function, you cannot reference it by that name; you have to use the name of the variable that has the
+function assigned to it.
+
+### 5.2 – IIFEs: Immediately-Invoked Function Expressions
+
+By default, defining a function doesn't call it. You need to do that in a separate expression. However, JS does offer a
+way of calling a function the moment it gets defined: this is through IIFEs.
+
+To make a IIFE, all you need to do is wrap a function definition inside a set of parentheses `( )` and then follow that
+with another set of parentheses, which will contain the arguments. Basically, you're turning this...
+
+```javascript
+function x {
+    console.log("Here's some text");
+}
+x();
+```
+
+...into this:
+
+```javascript
+(function x() {
+    console.log("Here's some text");
+})();
+```
+
+You're substituting the name in the function call for the function definition itself.
+
+And since IIFEs are functions, this means that they each have their own scope. It's a good way to isolate a function
+from the rest of the surrounding code when you need to support older browsers. The technique has started to fall by the
+wayside thanks to ES6 introducing block scope, but IIFEs still have merits based on legacy support. They might be a
+little on the older side at this point, but they still allow you to create variables without fear of creating any name
+conflicts.
+
+But since IIFEs are functions, that also means that they can have return values. You can set a variable to an IIFE that
+returns a value, and it'll be set to that value.
+
+Example of using IIFEs to avoid name conflicts:
+
+```javascript
+var a = 1;
+(function() {
+    var a = 2;
+    console.log(a); // 2
+})();
+console.log(a); // 1
+```
+
+And an example of assigning them to a variable, only for the IIFE to return a value:
+
+```javascript
+var a = (function() {
+    return 1;
+})();
+console.log(a); // 1
+```
+
+### 5.3 – Closures
+
+### 5.3.1 – Closures Overview
+
+Closures aren't going to be covered too much here, as there's an entire book in the series that's dedicated to the
+topic. But basically, think of them as a function's ability to recall its original context, even after things like it
+being returned as a value to a scope elsewhere in the code.
+
+#### 5.3.2 – Modules
+
+Modules are a common use case for closures, providing developers an easy way to create an API with only a portion of
+its interface exposed. The basic idea is that you have a user call a function **x**. That function then returns another
+function **y**. **y** is dependent on **x**, but you only give the user access to **y**. Thanks to closures, this means
+that the user is restricted to using whatever values and variables exist within **y**, yet it can still access all the
+values it needs within **x**.
+
+## 6 – The `this` identifier
+
+`this` is a keyword that exists in all object-oriented languages. However, JS' version of the keyword tends to be
+misunderstood, because it doesn't quite work the way that it does in other languages. Basically, `this` can refer to a
+lot of different things, where it would refer only to a smaller number of things in other languages.
+
+There are four basic rules to keep in mind:
+
+1. If you're not in strict mode, then using `this` will refer to the global object. But if you are, then this usage will
+    break the script.
+2. When you call the method of an object, using `this` within that method will refer to its object.
+3. Whenever you call a function, you can override what `this` refers to by invoking that function's `.call()` method. I
+    don't think this function has to be part of an object, either. Calling the same function multiple times but with a
+    different object passed into it via `call` each time will produce different results.
+4. Using `new` to call a function that uses `this` will make `this` refer to a brand new empty object
+
+Here are examples of all four in action:
+
+```javascript
+function foo() {
+    console.log( this.bar );
+}
+
+var bar = "global";
+
+var obj1 = {
+    bar: "obj1",
+    foo: foo
+};
+
+var obj2 = {
+    bar: "obj2"
+};
+
+
+foo();              // "global"
+obj1.foo();         // "obj1"
+foo.call( obj2 );   // "obj2"
+new foo();          // undefined
+```
+
+Those are the only four rules, but that's still more than some other OO languages. You need to be aware of the context
+in which `this` is being used to understand why, depending on the situation, it produces some values over others
+
+## 7 – Prototypes
+
+## 8 – Old & New
+
+## 9 – Non-JavaScript
