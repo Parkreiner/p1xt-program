@@ -396,6 +396,92 @@ in which `this` is being used to understand why, depending on the situation, it 
 
 ## 7 – Prototypes
 
+As with closures, there is an entire book dedicated to the subject of prototypes. For now, though, think of it as a set
+of fallbacks for when the engine can't find a certain property or method. Basically, if an engine tries looking for a
+property in an object and can't find it, it'll turn to the object's prototype. That prototype can itself have a
+prototype, so the engine can keep going up levels of prototypes if it still can't find the property until it either
+finds it or finds nothing.
+
+An object is linked to a prototype the moment it's first created. Presumably, if you add to a new object properties
+that have names that already exist in the prototype, the engine will just use the versions that were added. The engine
+will only start looking when it can't find something.
+
 ## 8 – Old & New
 
+### 8.1 – Overview
+
+JavaScript comes with a host of problems that just don't exist for other languages. The biggest one is the need to
+support a wide range of browsers, not all of which support the same functionality in the same way or are kept
+up-to-date.
+
+There are two main techniques for making this easier:
+
+1. Polyfilling
+2. Transpiling
+
+### 8.2 – Polyfilling
+
+Polyfilling is implementing a new feature of a language in code that's recognized by older versions of the language.
+Basically, you just check to see if a feature exists within the user's version of the language (through something like
+an `if` statement), and if it isn't, run the polyfill.
+
+For example, all modern versions of JS support the `Number.isNaN()` method. With polyfills, you would check if the
+method is supported. If not, you'll then add that method to the `Number` object, allowing you to use the same code for
+both modern and older browsers. Now, doing this is easy for methods. It's a little harder when you're trying to
+implement more low-level additions, like entire keywords.
+
+Just be careful if you ever decide to write your own polyfills. Your tests need to be rigorous and test for every
+possible case. For this reason, it's often best just to use someone else's polyfill. They'll be more likely to have been
+tested with much more rigor. Two well-known examples of polyfills that are tried and true are the ES5 Shim and the ES6
+Shim.
+
+### 8.3.1 – Transpiling
+
+As mentioned earlier, polyfills do have a big blind spot: it's very hard to add anything lower-level than methods. In
+fact, it's next to impossible. That's where transpiling comes in, to save you from even bothering. The idea is that you
+write code using all the newest syntax and tools available (possibly even using tools that haven't been added to any
+major browsers yet), and then convert it into code that uses older syntax and tools. The modern browsers will still
+support the old syntax, so the resulting code will be able to run in everything.
+
+So, if you're going to convert everything into old syntax, why bother using the new syntax? There are a few reasons:
+
+1. Newer syntax is often designed to be more readable. This helps make maintaining the code base far easier.
+2. It's possible to serve the code that uses the new features to new browsers. This will often come with big performance boosts.
+3. Doing this allows you to use new syntax the moment it comes out. If you ever run into any issues, you can file any problems with the design committee.
+
+Basically, transpiling should be viewed as an essential part of modern JS development. It's one of the easiest ways of
+ensuring that all users have a good experience, even if they are using older browsers.
+
+#### 8.3.2 – Transpiling Example
+
+As an example, modern JS supports default parameters – values for a function's parameters for when nothing gets passed
+into it. It looks like this in modern browsers:
+
+```javascript
+function foo(a = 2) {
+    console.log( a );
+}
+
+foo();      // 2
+foo( 42 );  // 42
+```
+
+And this is what it looks like when transpiled:
+
+```javascript
+function foo() {
+    var a = arguments[0] !== (void 0) ? arguments[0] : 2;
+    console.log( a );
+}
+```
+
+It just uses the ternary operator to check if `arguments[0]` is undefined. If not, it'll just use `arguments[0]`, but if
+it is, then it'll use `2`.
+
 ## 9 – Non-JavaScript
+
+JS is in a bit of a peculiar spot compared to other languages. Since the language was first designed to interface with
+browsers, there's a lot of browser-specific functions and methods that can't be used in any other context. The biggest
+example of this is the entire DOM API. It looks like an object, but that appearance is basically in interface in itself.
+Objects like this – ones that use their object-ness as an interface for external functionality – are called
+**host objects**.
