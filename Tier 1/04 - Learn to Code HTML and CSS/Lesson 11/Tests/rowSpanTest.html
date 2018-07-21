@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test to see what happens when you use the `rowspan` attribute multiple times</title>
+    <style>
+        * {
+            border-spacing: 0;
+            text-align: center;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        table {
+            width: 60%;
+            background-color: #eee;
+            margin: 3em auto;
+            padding: 2em;
+        }
+        td[rowspan="2"] {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th id="1">1</th>
+                <th id="2">2</th>
+                <th id="3">3</th>
+                <th id="4">4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td headers="1" rowspan="2">A</td>
+                <td>B</td>
+                <td headers="3" rowspan="2">C</td>
+                <td>D</td>
+            </tr>
+            <tr>
+                <td headers="2">E</td>
+                <td headers="4">F</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+            <thead>
+                <tr>
+                    <th id="1">1</th>
+                    <th id="2">2</th>
+                    <th id="3">3</th>
+                    <th id="4">4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td headers="1" colspan="2" rowspan="2">A</td>
+                    <td>B</td>
+                    <td headers="3" rowspan="2">C</td>
+                </tr>
+                <tr>
+                    <td headers="2">D</td>
+                </tr>
+            </tbody>
+        </table>
+</body>
+</html>
