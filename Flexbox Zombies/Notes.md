@@ -42,3 +42,21 @@ there is an even amount of space **around** each element. Because the flex conta
 the elements into account, the elements will have two units of spacing between them. `space-between` ensures that there
 is an even amount of space **between** each element, which is why it doesn't add any spacing to the elements that hug
 the edges. There aren't any elements opposite those sides, so there's no need to add spacing.
+
+# Chapter 3: `align-items`
+
+# Chapter 4: `align-self`
+
+# Chapter 5: `flex-grow`
+
+# Chapter 6: `flex-shrink`
+
+# Chapter 7: `flex-basis`
+
+# Chapter 8: `order`
+
+# Chapter 9: `flex-wrap`
+
+# Chapter 10: `align-content`
+
+# Chapter 11: `flex` and `flex-flow`
