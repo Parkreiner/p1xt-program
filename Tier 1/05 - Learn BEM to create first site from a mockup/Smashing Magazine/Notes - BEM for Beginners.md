@@ -1,0 +1,1 @@
+https://www.smashingmagazine.com/2018/06/bem-for-beginners/
